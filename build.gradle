@@ -1,7 +1,15 @@
 plugins {
     id 'java'
-    id 'io.freefair.lombok' version '5.3.0'
+    id "io.freefair.lombok" version "5.3.0"
     id 'io.qameta.allure' version '2.11.2'
+}
+
+allure {
+    autoconfigure = true
+    version = '2.13.6'
+    useJUnit5 {
+        version = '2.13.6'
+    }
 }
 
 group 'ru.netology'
@@ -10,15 +18,6 @@ version '1.0-SNAPSHOT'
 sourceCompatibility = 11
 compileJava.options.encoding = "UTF-8"
 compileTestJava.options.encoding = "UTF-8"
-
-allure {
-    autoconfigure = true
-    version = '2.20.1' // Latest Allure Version
-    useJUnit5 {
-        version = '2.20.1' // Latest Allure Version
-    }
-}
-
 
 repositories {
     mavenCentral()
@@ -34,8 +33,16 @@ dependencies {
     testImplementation 'io.rest-assured:rest-assured:5.3.0'
     testImplementation 'io.qameta.allure:allure-rest-assured:2.21.0'
     testImplementation 'com.google.code.gson:gson:2.10.1'
+    testImplementation 'com.github.javafaker:javafaker:1.0.2'
 }
 
 test {
     useJUnitPlatform()
+    systemProperty 'selenide.headless', System.getProperty('selenide.headless')
+    systemProperty 'file.encoding', 'UTF-8'
+    systemProperty 'db.url', System.getProperty('db.url', 'jdbc:mysql://3306/app')
+    systemProperty 'app.url', System.getProperty('app.url','http://localhost')
+    systemProperty 'app.port', System.getProperty('app.port','8080')
+    systemProperty 'app.userDB', System.getProperty('app.userDB','app')
+    systemProperty 'app.password', System.getProperty('app.password','pass')
 }
