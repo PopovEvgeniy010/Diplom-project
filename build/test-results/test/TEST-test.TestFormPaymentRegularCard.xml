@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="test.TestFormPaymentRegularCard" tests="1" skipped="0" failures="1" errors="0" timestamp="2023-08-07T13:03:08" hostname="HUAWEI" time="6.89">
+<testsuite name="test.TestFormPaymentRegularCard" tests="1" skipped="0" failures="1" errors="0" timestamp="2023-08-10T11:05:58" hostname="HUAWEI" time="5.823">
   <properties/>
-  <testcase name="PaymentWithRegularActiveCard" classname="test.TestFormPaymentRegularCard" time="6.89">
+  <testcase name="PaymentWithRegularActiveCard" classname="test.TestFormPaymentRegularCard" time="5.823">
     <failure message="com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure&#10;&#10;The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server." type="com.mysql.cj.jdbc.exceptions.CommunicationsException">com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
 
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
@@ -139,7 +139,7 @@ Caused by: java.net.SocketException: Network is unreachable: connect
 </failure>
   </testcase>
   <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[авг. 07, 2023 4:03:08 PM org.junit.platform.launcher.core.TestExecutionListenerRegistry lambda$notifyEach$1
+  <system-err><![CDATA[авг. 10, 2023 2:05:58 PM org.junit.platform.launcher.core.TestExecutionListenerRegistry lambda$notifyEach$1
 WARNING: TestExecutionListener [io.qameta.allure.junitplatform.AllureJunitPlatform] threw exception for method: executionStarted(TestIdentifier [uniqueId = '[engine:junit-jupiter]/[class:test.TestFormPaymentRegularCard]/[method:shouldPayByApprovedCard()]', parentId = '[engine:junit-jupiter]/[class:test.TestFormPaymentRegularCard]', displayName = 'PaymentWithRegularActiveCard', legacyReportingName = 'shouldPayByApprovedCard()', source = MethodSource [className = 'test.TestFormPaymentRegularCard', methodName = 'shouldPayByApprovedCard', methodParameterTypes = ''], tags = [], type = TEST])
 java.lang.NoSuchMethodError: 'void io.qameta.allure.util.ResultsUtils.processDescription(java.lang.ClassLoader, java.lang.reflect.Method, io.qameta.allure.model.ExecutableItem)'
 	at io.qameta.allure.junitplatform.AllureJunitPlatform.lambda$startTestCase$7(AllureJunitPlatform.java:403)
@@ -210,7 +210,7 @@ java.lang.NoSuchMethodError: 'void io.qameta.allure.util.ResultsUtils.processDes
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 
-авг. 07, 2023 4:03:15 PM org.junit.platform.launcher.core.TestExecutionListenerRegistry lambda$notifyEach$1
+авг. 10, 2023 2:06:04 PM org.junit.platform.launcher.core.TestExecutionListenerRegistry lambda$notifyEach$1
 WARNING: TestExecutionListener [io.qameta.allure.junitplatform.AllureJunitPlatform] threw exception for method: executionFinished(TestIdentifier [uniqueId = '[engine:junit-jupiter]/[class:test.TestFormPaymentRegularCard]/[method:shouldPayByApprovedCard()]', parentId = '[engine:junit-jupiter]/[class:test.TestFormPaymentRegularCard]', displayName = 'PaymentWithRegularActiveCard', legacyReportingName = 'shouldPayByApprovedCard()', source = MethodSource [className = 'test.TestFormPaymentRegularCard', methodName = 'shouldPayByApprovedCard', methodParameterTypes = ''], tags = [], type = TEST], TestExecutionResult [status = FAILED, throwable = com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
 
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.])
@@ -283,7 +283,7 @@ java.lang.NoSuchMethodError: 'io.qameta.allure.model.TestResultContainer io.qame
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 
-авг. 07, 2023 4:03:15 PM org.junit.platform.launcher.core.TestExecutionListenerRegistry lambda$notifyEach$1
+авг. 10, 2023 2:06:04 PM org.junit.platform.launcher.core.TestExecutionListenerRegistry lambda$notifyEach$1
 WARNING: TestExecutionListener [io.qameta.allure.junitplatform.AllureJunitPlatform] threw exception for method: executionFinished(TestIdentifier [uniqueId = '[engine:junit-jupiter]/[class:test.TestFormPaymentRegularCard]', parentId = '[engine:junit-jupiter]', displayName = 'TestFormPaymentRegularCard', legacyReportingName = 'test.TestFormPaymentRegularCard', source = ClassSource [className = 'test.TestFormPaymentRegularCard', filePosition = null], tags = [], type = CONTAINER], TestExecutionResult [status = SUCCESSFUL, throwable = null])
 java.lang.NoSuchMethodError: 'io.qameta.allure.model.TestResultContainer io.qameta.allure.model.TestResultContainer.setChildren(java.util.Collection)'
 	at io.qameta.allure.junitplatform.AllureJunitPlatform.lambda$stopTestContainer$3(AllureJunitPlatform.java:294)

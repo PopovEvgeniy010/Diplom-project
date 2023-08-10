@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="test.TestFormPaymentCredit" tests="1" skipped="0" failures="1" errors="0" timestamp="2023-08-07T13:02:55" hostname="HUAWEI" time="13.462">
+<testsuite name="test.TestFormPaymentCredit" tests="1" skipped="0" failures="1" errors="0" timestamp="2023-08-10T11:05:41" hostname="HUAWEI" time="17.38">
   <properties/>
-  <testcase name="PaymentByActiveCreditCard" classname="test.TestFormPaymentCredit" time="13.462">
+  <testcase name="PaymentByActiveCreditCard" classname="test.TestFormPaymentCredit" time="17.38">
     <failure message="com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure&#10;&#10;The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server." type="com.mysql.cj.jdbc.exceptions.CommunicationsException">com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
 
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
@@ -139,7 +139,7 @@ Caused by: java.net.SocketException: Network is unreachable: connect
 </failure>
   </testcase>
   <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[авг. 07, 2023 4:02:55 PM org.junit.platform.launcher.core.TestExecutionListenerRegistry lambda$notifyEach$1
+  <system-err><![CDATA[авг. 10, 2023 2:05:41 PM org.junit.platform.launcher.core.TestExecutionListenerRegistry lambda$notifyEach$1
 WARNING: TestExecutionListener [io.qameta.allure.junitplatform.AllureJunitPlatform] threw exception for method: executionStarted(TestIdentifier [uniqueId = '[engine:junit-jupiter]/[class:test.TestFormPaymentCredit]/[method:shouldPayByApprovedCardInCredit()]', parentId = '[engine:junit-jupiter]/[class:test.TestFormPaymentCredit]', displayName = 'PaymentByActiveCreditCard', legacyReportingName = 'shouldPayByApprovedCardInCredit()', source = MethodSource [className = 'test.TestFormPaymentCredit', methodName = 'shouldPayByApprovedCardInCredit', methodParameterTypes = ''], tags = [], type = TEST])
 java.lang.NoSuchMethodError: 'void io.qameta.allure.util.ResultsUtils.processDescription(java.lang.ClassLoader, java.lang.reflect.Method, io.qameta.allure.model.ExecutableItem)'
 	at io.qameta.allure.junitplatform.AllureJunitPlatform.lambda$startTestCase$7(AllureJunitPlatform.java:403)
@@ -210,16 +210,16 @@ java.lang.NoSuchMethodError: 'void io.qameta.allure.util.ResultsUtils.processDes
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 
-Starting ChromeDriver 114.0.5735.90 (386bc09e8f4f2e025eddae123f36f6263096ae49-refs/branch-heads/5735@{#1052}) on port 43523
+Starting ChromeDriver 114.0.5735.90 (386bc09e8f4f2e025eddae123f36f6263096ae49-refs/branch-heads/5735@{#1052}) on port 33412
 Only local connections are allowed.
 Please see https://chromedriver.chromium.org/security-considerations for suggestions on keeping ChromeDriver safe.
 ChromeDriver was started successfully.
-[1691413380.537][WARNING]: This version of ChromeDriver has not been tested with Chrome version 115.
-авг. 07, 2023 4:03:01 PM org.openqa.selenium.devtools.CdpVersionFinder findNearestMatch
+[1691665546.227][WARNING]: This version of ChromeDriver has not been tested with Chrome version 115.
+авг. 10, 2023 2:05:46 PM org.openqa.selenium.devtools.CdpVersionFinder findNearestMatch
 WARNING: Unable to find CDP implementation matching 115
-авг. 07, 2023 4:03:01 PM org.openqa.selenium.chromium.ChromiumDriver lambda$new$3
+авг. 10, 2023 2:05:46 PM org.openqa.selenium.chromium.ChromiumDriver lambda$new$3
 WARNING: Unable to find version of CDP to use for . You may need to include a dependency on a specific version of the CDP using something similar to `org.seleniumhq.selenium:selenium-devtools-v86:4.8.1` where the version ("v86") matches the version of the chromium-based browser you're using and the version number of the artifact is the same as Selenium's.
-авг. 07, 2023 4:03:08 PM org.junit.platform.launcher.core.TestExecutionListenerRegistry lambda$notifyEach$1
+авг. 10, 2023 2:05:58 PM org.junit.platform.launcher.core.TestExecutionListenerRegistry lambda$notifyEach$1
 WARNING: TestExecutionListener [io.qameta.allure.junitplatform.AllureJunitPlatform] threw exception for method: executionFinished(TestIdentifier [uniqueId = '[engine:junit-jupiter]/[class:test.TestFormPaymentCredit]/[method:shouldPayByApprovedCardInCredit()]', parentId = '[engine:junit-jupiter]/[class:test.TestFormPaymentCredit]', displayName = 'PaymentByActiveCreditCard', legacyReportingName = 'shouldPayByApprovedCardInCredit()', source = MethodSource [className = 'test.TestFormPaymentCredit', methodName = 'shouldPayByApprovedCardInCredit', methodParameterTypes = ''], tags = [], type = TEST], TestExecutionResult [status = FAILED, throwable = com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
 
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.])
@@ -292,7 +292,7 @@ java.lang.NoSuchMethodError: 'io.qameta.allure.model.TestResultContainer io.qame
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 
-авг. 07, 2023 4:03:08 PM org.junit.platform.launcher.core.TestExecutionListenerRegistry lambda$notifyEach$1
+авг. 10, 2023 2:05:58 PM org.junit.platform.launcher.core.TestExecutionListenerRegistry lambda$notifyEach$1
 WARNING: TestExecutionListener [io.qameta.allure.junitplatform.AllureJunitPlatform] threw exception for method: executionFinished(TestIdentifier [uniqueId = '[engine:junit-jupiter]/[class:test.TestFormPaymentCredit]', parentId = '[engine:junit-jupiter]', displayName = 'TestFormPaymentCredit', legacyReportingName = 'test.TestFormPaymentCredit', source = ClassSource [className = 'test.TestFormPaymentCredit', filePosition = null], tags = [], type = CONTAINER], TestExecutionResult [status = SUCCESSFUL, throwable = null])
 java.lang.NoSuchMethodError: 'io.qameta.allure.model.TestResultContainer io.qameta.allure.model.TestResultContainer.setChildren(java.util.Collection)'
 	at io.qameta.allure.junitplatform.AllureJunitPlatform.lambda$stopTestContainer$3(AllureJunitPlatform.java:294)
