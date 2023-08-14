@@ -1,6 +1,6 @@
 package databaseentities;
 
-public enum Status {
-    PASSED,
-    FAILED
-}
+//public enum Status {
+//    PASSED,
+//    FAILED
+//}

@@ -3,11 +3,12 @@ package test;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.model.Status;
 import io.qameta.allure.selenide.AllureSelenide;
-import data.SQl;
+import data.SqlHelper;
+import lombok.SneakyThrows;
 import page.FormPage;
+import page.MainPage;
 import org.junit.jupiter.api.*;
 
-import java.sql.SQLException;
 
 public class TestFormPaymentCredit {
     private FormPage formPage;
@@ -22,9 +23,10 @@ public class TestFormPaymentCredit {
         SelenideLogger.addListener("allure", new AllureSelenide());
     }
 
+    @SneakyThrows
     @AfterEach
-    void clearAll() throws SQLException {
-        SQl.clearAllData();
+    void clearAll() {
+        SqlHelper.clearAllData();
     }
 
     @AfterAll
@@ -32,10 +34,11 @@ public class TestFormPaymentCredit {
         SelenideLogger.removeListener("allure");
     }
 
+    @SneakyThrows
     @Test
     @DisplayName("PaymentByActiveCreditCard")
-    void shouldPayByApprovedCardInCredit() throws SQLException {
-        formPage.buyOnCredit();
+    void shouldPayByApprovedCardInCredit() {
+        MainPage.buyOnCredit();
         formPage.setCardNumber("4444444444444441");
         formPage.setCardMonth("08");
         formPage.setCardYear("23");
@@ -45,10 +48,12 @@ public class TestFormPaymentCredit {
         formPage.checkMessageSuccess();
     }
 
+
+    @SneakyThrows
     @Test
     @DisplayName("PaymentForAnInactiveCard")
-    void shouldNoPayByDeclinedCardInCredit() throws SQLException {
-        formPage.buyOnCredit();
+    void shouldNoPayByDeclinedCardInCredit() {
+        MainPage.buyOnCredit();
         formPage.setCardNumber("4444444444444442");
         formPage.setCardMonth("08");
         formPage.setCardYear("23");
@@ -58,10 +63,11 @@ public class TestFormPaymentCredit {
         formPage.checkMessageError();
     }
 
+    @SneakyThrows
     @Test
     @DisplayName("PaymentByUnknownCard")
-    void shouldNoPayByUnknownCardInCredit() throws SQLException {
-        formPage.buyOnCredit();
+    void shouldNoPayByUnknownCardInCredit() {
+        MainPage.buyOnCredit();
         formPage.setCardNumber("4444444444444443");
         formPage.setCardMonth("08");
         formPage.setCardYear("23");
@@ -71,10 +77,11 @@ public class TestFormPaymentCredit {
         formPage.checkMessageError();
     }
 
+    @SneakyThrows
     @Test
     @DisplayName("PaymentByCardWithInvalidCardNumber")
-    void shouldNoPayInvalidCardNumberFieldInCredit() throws SQLException {
-        formPage.buyOnCredit();
+    void shouldNoPayInvalidCardNumberFieldInCredit() {
+        MainPage.buyOnCredit();
         formPage.setCardNumber("3333 2323 DSDF ASSD");
         formPage.setCardMonth("08");
         formPage.setCardYear("23");
@@ -84,10 +91,11 @@ public class TestFormPaymentCredit {
         formPage.checkMessageWrongFormat();
     }
 
+    @SneakyThrows
     @Test
     @DisplayName("PaymentByCardWithInvalidMonthNumber")
-    void shouldNoPayInvalidMonthFieldInCredit() throws SQLException {
-        formPage.buyOnCredit();
+    void shouldNoPayInvalidMonthFieldInCredit() {
+        MainPage.buyOnCredit();
         formPage.setCardNumber("4444444444444441");
         formPage.setCardMonth("13");
         formPage.setCardYear("23");
@@ -97,10 +105,11 @@ public class TestFormPaymentCredit {
         formPage.checkMessageWrongDate();
     }
 
+    @SneakyThrows
     @Test
     @DisplayName("PaymentByCardWithInvalidYearNumber")
-    void shouldNoPayInvalidYearFieldInCredit() throws SQLException {
-        formPage.buyOnCredit();
+    void shouldNoPayInvalidYearFieldInCredit() {
+        MainPage.buyOnCredit();
         formPage.setCardNumber("4444444444444441");
         formPage.setCardMonth("08");
         formPage.setCardYear("18");
@@ -110,10 +119,11 @@ public class TestFormPaymentCredit {
         formPage.checkMessageOverDate();
     }
 
+    @SneakyThrows
     @Test
     @DisplayName("PaymentByCardWithInvalidOwnerField")
-    void shouldNoPayInvalidCardOwnerFieldInCredit() throws SQLException {
-        formPage.buyOnCredit();
+    void shouldNoPayInvalidCardOwnerFieldInCredit() {
+        MainPage.buyOnCredit();
         formPage.setCardNumber("4444444444444441");
         formPage.setCardMonth("08");
         formPage.setCardYear("23");
@@ -123,10 +133,11 @@ public class TestFormPaymentCredit {
         formPage.checkMessageError();
     }
 
+    @SneakyThrows
     @Test
     @DisplayName("PaymentByCardWithInvalidCVVField")
-    void shouldNoPayInvalidCVVFieldInCredit() throws SQLException {
-        formPage.buyOnCredit();
+    void shouldNoPayInvalidCVVFieldInCredit() {
+        MainPage.buyOnCredit();
         formPage.setCardNumber("4444444444444441");
         formPage.setCardMonth("08");
         formPage.setCardYear("23");
@@ -136,10 +147,11 @@ public class TestFormPaymentCredit {
         formPage.checkMessageError();
     }
 
+    @SneakyThrows
     @Test
     @DisplayName("PaymentByCardWithAnEmptyCardNumber")
-    void shouldNoPayEmptyCardNumberFieldInCredit() throws SQLException {
-        formPage.buyOnCredit();
+    void shouldNoPayEmptyCardNumberFieldInCredit() {
+        MainPage.buyOnCredit();
         formPage.setCardNumber("");
         formPage.setCardMonth("08");
         formPage.setCardYear("23");
@@ -149,10 +161,11 @@ public class TestFormPaymentCredit {
         formPage.checkMessageWrongFormat();
     }
 
+    @SneakyThrows
     @Test
     @DisplayName("PaymentByCardWithAnEmptyMonthNumber")
-    void shouldNoPayEmptyMonthFieldInCredit() throws SQLException {
-        formPage.buyOnCredit();
+    void shouldNoPayEmptyMonthFieldInCredit() {
+        MainPage.buyOnCredit();
         formPage.setCardNumber("4444444444444441");
         formPage.setCardMonth("");
         formPage.setCardYear("23");
@@ -162,10 +175,11 @@ public class TestFormPaymentCredit {
         formPage.checkMessageWrongFormat();
     }
 
+    @SneakyThrows
     @Test
     @DisplayName("PaymentByCardWithAnEmptyYearNumber")
-    void shouldNoPayEmptyYearFieldInCredit() throws SQLException {
-        formPage.buyOnCredit();
+    void shouldNoPayEmptyYearFieldInCredit() {
+        MainPage.buyOnCredit();
         formPage.setCardNumber("4444444444444441");
         formPage.setCardMonth("08");
         formPage.setCardYear("");
@@ -175,10 +189,11 @@ public class TestFormPaymentCredit {
         formPage.checkMessageWrongFormat();
     }
 
+    @SneakyThrows
     @Test
     @DisplayName("PaymentByCardWithAnEmptyFieldOwner")
-    void shouldNoPayEmptyCardOwnerFieldInCredit() throws SQLException {
-        formPage.buyOnCredit();
+    void shouldNoPayEmptyCardOwnerFieldInCredit() {
+        MainPage.buyOnCredit();
         formPage.setCardNumber("4444444444444441");
         formPage.setCardMonth("08");
         formPage.setCardYear("23");
@@ -188,10 +203,11 @@ public class TestFormPaymentCredit {
         formPage.checkMessageRequiredField();
     }
 
+    @SneakyThrows
     @Test
     @DisplayName("PaymentByCardWithAnEmptyCVVField")
-    void shouldNoPayEmptyCVVFieldInCredit() throws SQLException {
-        formPage.buyOnCredit();
+    void shouldNoPayEmptyCVVFieldInCredit() {
+        MainPage.buyOnCredit();
         formPage.setCardNumber("4444444444444441");
         formPage.setCardMonth("08");
         formPage.setCardYear("23");
@@ -201,10 +217,11 @@ public class TestFormPaymentCredit {
         formPage.checkMessageWrongFormat();
     }
 
+    @SneakyThrows
     @Test
     @DisplayName("PaymentByActiveCardDatabaseRecordCheck")
-    void shouldPayByApprovedCardInCreditStatusInDB() throws SQLException {
-        formPage.buyOnCredit();
+    void shouldPayByApprovedCardInCreditStatusInDB() {
+        MainPage.buyOnCredit();
         formPage.setCardNumber("4444444444444441");
         formPage.setCardMonth("08");
         formPage.setCardYear("23");
@@ -212,13 +229,14 @@ public class TestFormPaymentCredit {
         formPage.setCardCVV("999");
         formPage.pushСontinueButton();
         formPage.checkMessageSuccess();
-        SQl.checkCreditStatus(Status.PASSED);
+        SqlHelper.checkCreditStatus(Status.PASSED);
     }
 
+    @SneakyThrows
     @Test
     @DisplayName("PaymentOnAnInactiveCardDatabaseRecordCheck")
-    void shouldPayByDeclinedCardInCreditStatusInDB() throws SQLException {
-        formPage.buyOnCredit();
+    void shouldPayByDeclinedCardInCreditStatusInDB() {
+        MainPage.buyOnCredit();
         formPage.setCardNumber("4444444444444442");
         formPage.setCardMonth("08");
         formPage.setCardYear("23");
@@ -226,6 +244,6 @@ public class TestFormPaymentCredit {
         formPage.setCardCVV("999");
         formPage.pushСontinueButton();
         formPage.checkMessageSuccess();
-        SQl.checkCreditStatus(Status.FAILED);
+        SqlHelper.checkCreditStatus(Status.FAILED);
     }
 }

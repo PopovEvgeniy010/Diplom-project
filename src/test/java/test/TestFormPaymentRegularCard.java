@@ -3,11 +3,11 @@ package test;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.model.Status;
 import io.qameta.allure.selenide.AllureSelenide;
-import data.SQl;
+import data.SqlHelper;
+import lombok.SneakyThrows;
 import page.FormPage;
+import page.MainPage;
 import org.junit.jupiter.api.*;
-
-import java.sql.SQLException;
 
 public class
 TestFormPaymentRegularCard {
@@ -23,9 +23,10 @@ TestFormPaymentRegularCard {
         SelenideLogger.addListener("allure", new AllureSelenide());
     }
 
+    @SneakyThrows
     @AfterEach
-    void clearAll() throws SQLException {
-        SQl.clearAllData();
+    void clearAll() {
+        SqlHelper.clearAllData();
     }
 
     @AfterAll
@@ -33,10 +34,11 @@ TestFormPaymentRegularCard {
         SelenideLogger.removeListener("allure");
     }
 
+    @SneakyThrows
     @Test
     @DisplayName("PaymentWithRegularActiveCard")
-    void shouldPayByApprovedCard() throws SQLException {
-        formPage.buyForYourMoney();
+    void shouldPayByApprovedCard() {
+        MainPage.buyForYourMoney();
         formPage.setCardNumber("4444444444444441");
         formPage.setCardMonth("08");
         formPage.setCardYear("23");
@@ -46,10 +48,11 @@ TestFormPaymentRegularCard {
         formPage.checkMessageSuccess();
     }
 
+    @SneakyThrows
     @Test
     @DisplayName("PaymentForAnInactiveCard")
-    void shouldNoPayByDeclinedCard() throws SQLException {
-        formPage.buyForYourMoney();
+    void shouldNoPayByDeclinedCard() {
+        MainPage.buyForYourMoney();
         formPage.setCardNumber("4444444444444442");
         formPage.setCardMonth("08");
         formPage.setCardYear("23");
@@ -59,10 +62,11 @@ TestFormPaymentRegularCard {
         formPage.checkMessageError();
     }
 
+    @SneakyThrows
     @Test
     @DisplayName("PaymentByUnknownCard")
-    void shouldNoPayByUnknownCard() throws SQLException {
-        formPage.buyForYourMoney();
+    void shouldNoPayByUnknownCard() {
+        MainPage.buyForYourMoney();
         formPage.setCardNumber("4444444444444443");
         formPage.setCardMonth("08");
         formPage.setCardYear("23");
@@ -72,10 +76,11 @@ TestFormPaymentRegularCard {
         formPage.checkMessageError();
     }
 
+    @SneakyThrows
     @Test
     @DisplayName("PaymentByCardWithInvalidCardNumber")
-    void shouldNoPayInvalidCardNumberField() throws SQLException {
-        formPage.buyForYourMoney();
+    void shouldNoPayInvalidCardNumberField() {
+        MainPage.buyForYourMoney();
         formPage.setCardNumber("3333 2323 DSDF ASSD");
         formPage.setCardMonth("08");
         formPage.setCardYear("23");
@@ -85,10 +90,11 @@ TestFormPaymentRegularCard {
         formPage.checkMessageWrongFormat();
     }
 
+    @SneakyThrows
     @Test
     @DisplayName("PaymentByCardWithInvalidMonthNumber")
-    void shouldNoPayInvalidMonthField() throws SQLException {
-        formPage.buyForYourMoney();
+    void shouldNoPayInvalidMonthField() {
+        MainPage.buyForYourMoney();
         formPage.setCardNumber("4444444444444441");
         formPage.setCardMonth("13");
         formPage.setCardYear("23");
@@ -98,10 +104,11 @@ TestFormPaymentRegularCard {
         formPage.checkMessageWrongDate();
     }
 
+    @SneakyThrows
     @Test
     @DisplayName("PaymentByCardWithInvalidYearNumber")
-    void shouldNoPayInvalidYearField() throws SQLException {
-        formPage.buyForYourMoney();
+    void shouldNoPayInvalidYearField() {
+        MainPage.buyForYourMoney();
         formPage.setCardNumber("4444444444444441");
         formPage.setCardMonth("08");
         formPage.setCardYear("18");
@@ -111,10 +118,11 @@ TestFormPaymentRegularCard {
         formPage.checkMessageOverDate();
     }
 
+    @SneakyThrows
     @Test
     @DisplayName("PaymentByCardWithInvalidOwnerField")
-    void shouldNoPayInvalidCardOwnerField() throws SQLException {
-        formPage.buyForYourMoney();
+    void shouldNoPayInvalidCardOwnerField() {
+        MainPage.buyForYourMoney();
         formPage.setCardNumber("4444444444444441");
         formPage.setCardMonth("08");
         formPage.setCardYear("23");
@@ -124,10 +132,11 @@ TestFormPaymentRegularCard {
         formPage.checkMessageError();
     }
 
+    @SneakyThrows
     @Test
     @DisplayName("PaymentByCardWithInvalidCVVField")
-    void shouldNoPayInvalidCVVField() throws SQLException {
-        formPage.buyForYourMoney();
+    void shouldNoPayInvalidCVVField() {
+        MainPage.buyForYourMoney();
         formPage.setCardNumber("4444444444444441");
         formPage.setCardMonth("08");
         formPage.setCardYear("23");
@@ -137,10 +146,11 @@ TestFormPaymentRegularCard {
         formPage.checkMessageError();
     }
 
+    @SneakyThrows
     @Test
     @DisplayName("PaymentByCardWithAnEmptyCardNumber")
-    void shouldNoPayEmptyCardNumberField() throws SQLException {
-        formPage.buyForYourMoney();
+    void shouldNoPayEmptyCardNumberField() {
+        MainPage.buyForYourMoney();
         formPage.setCardNumber("");
         formPage.setCardMonth("08");
         formPage.setCardYear("23");
@@ -150,10 +160,11 @@ TestFormPaymentRegularCard {
         formPage.checkMessageWrongFormat();
     }
 
+    @SneakyThrows
     @Test
     @DisplayName("PaymentByCardWithAnEmptyMonthNumber")
-    void shouldNoPayEmptyMonthField() throws SQLException {
-        formPage.buyForYourMoney();
+    void shouldNoPayEmptyMonthField() {
+        MainPage.buyForYourMoney();
         formPage.setCardNumber("4444444444444441");
         formPage.setCardMonth("");
         formPage.setCardYear("23");
@@ -163,10 +174,11 @@ TestFormPaymentRegularCard {
         formPage.checkMessageWrongFormat();
     }
 
+    @SneakyThrows
     @Test
     @DisplayName("PaymentByCardWithAnEmptyYearNumber")
-    void shouldNoPayEmptyYearField() throws SQLException {
-        formPage.buyForYourMoney();
+    void shouldNoPayEmptyYearField() {
+        MainPage.buyForYourMoney();
         formPage.setCardNumber("4444444444444441");
         formPage.setCardMonth("08");
         formPage.setCardYear("");
@@ -176,10 +188,11 @@ TestFormPaymentRegularCard {
         formPage.checkMessageWrongFormat();
     }
 
+    @SneakyThrows
     @Test
     @DisplayName("PaymentByCardWithAnEmptyFieldOwner")
-    void shouldNoPayEmptyCardOwnerField() throws SQLException {
-        formPage.buyForYourMoney();
+    void shouldNoPayEmptyCardOwnerField() {
+        MainPage.buyForYourMoney();
         formPage.setCardNumber("4444444444444441");
         formPage.setCardMonth("08");
         formPage.setCardYear("23");
@@ -189,10 +202,11 @@ TestFormPaymentRegularCard {
         formPage.checkMessageRequiredField();
     }
 
+    @SneakyThrows
     @Test
     @DisplayName("PaymentByCardWithAnEmptyCVVField")
-    void shouldNoPayEmptyCVVField() throws SQLException {
-        formPage.buyForYourMoney();
+    void shouldNoPayEmptyCVVField() {
+        MainPage.buyForYourMoney();
         formPage.setCardNumber("4444444444444441");
         formPage.setCardMonth("08");
         formPage.setCardYear("23");
@@ -202,11 +216,11 @@ TestFormPaymentRegularCard {
         formPage.checkMessageWrongFormat();
     }
 
-
+    @SneakyThrows
     @Test
     @DisplayName("PaymentByActiveCardDatabaseRecordCheck")
-    void shouldPayByApprovedCardStatusInDB() throws SQLException {
-        formPage.buyForYourMoney();
+    void shouldPayByApprovedCardStatusInDB() {
+        MainPage.buyForYourMoney();
         formPage.setCardNumber("4444444444444441");
         formPage.setCardMonth("08");
         formPage.setCardYear("23");
@@ -214,13 +228,14 @@ TestFormPaymentRegularCard {
         formPage.setCardCVV("999");
         formPage.pushСontinueButton();
         formPage.checkMessageSuccess();
-        SQl.checkPaymentStatus(Status.PASSED);
+        SqlHelper.checkPaymentStatus(Status.PASSED);
     }
 
+    @SneakyThrows
     @Test
     @DisplayName("PaymentOnAnInactiveCardDatabaseRecordCheck")
-    void shouldNoPayByDeclinedCardStatusInDB() throws SQLException {
-        formPage.buyForYourMoney();
+    void shouldNoPayByDeclinedCardStatusInDB() {
+        MainPage.buyForYourMoney();
         formPage.setCardNumber("4444444444444442");
         formPage.setCardMonth("08");
         formPage.setCardYear("23");
@@ -228,7 +243,7 @@ TestFormPaymentRegularCard {
         formPage.setCardCVV("999");
         formPage.pushСontinueButton();
         formPage.checkMessageSuccess();
-        SQl.checkPaymentStatus(Status.FAILED);
+        SqlHelper.checkPaymentStatus(Status.FAILED);
     }
 }
 

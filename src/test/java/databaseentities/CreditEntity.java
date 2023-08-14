@@ -5,9 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class CreditEntity {
-    public Status status;
-}
+//@Data
+//@NoArgsConstructor
+//@AllArgsConstructor
+//public class CreditEntity {
+//    public Status status;
+//}
