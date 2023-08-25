@@ -1,22 +1,34 @@
 package test;
 
 import com.codeborne.selenide.logevents.SelenideLogger;
-import io.qameta.allure.model.Status;
+import data.DataGenerator;
 import io.qameta.allure.selenide.AllureSelenide;
 import data.SqlHelper;
 import lombok.SneakyThrows;
 import page.FormPage;
-import page.MainPage;
 import org.junit.jupiter.api.*;
+import page.MainPage;
+
+import static data.DataGenerator.*;
+import static data.SqlHelper.getcheckPaymentStatus;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+;
 
 public class
 TestFormPaymentRegularCard {
     private FormPage formPage;
+    private MainPage mainPage;
 
     @BeforeEach
-    void setUpPage() {
+    void setUpFormPage() {
         formPage = new FormPage();
     }
+
+    @BeforeEach
+    void setUpMainPage() {
+        mainPage = new MainPage();
+    }
+
 
     @BeforeAll
     static void setUpAll() {
@@ -34,216 +46,141 @@ TestFormPaymentRegularCard {
         SelenideLogger.removeListener("allure");
     }
 
-    @SneakyThrows
     @Test
     @DisplayName("PaymentWithRegularActiveCard")
     void shouldPayByApprovedCard() {
-        MainPage.buyForYourMoney();
-        formPage.setCardNumber("4444444444444441");
-        formPage.setCardMonth("08");
-        formPage.setCardYear("23");
-        formPage.setCardOwner("Ivan Popov");
-        formPage.setCardCVV("999");
-        formPage.pushСontinueButton();
+        mainPage.buyForYourMoney();
+        formPage.setFormFiled(generatedApprovedCard("en"));
         formPage.checkMessageSuccess();
     }
 
-    @SneakyThrows
+
     @Test
     @DisplayName("PaymentForAnInactiveCard")
     void shouldNoPayByDeclinedCard() {
-        MainPage.buyForYourMoney();
-        formPage.setCardNumber("4444444444444442");
-        formPage.setCardMonth("08");
-        formPage.setCardYear("23");
-        formPage.setCardOwner("Ivan Popov");
-        formPage.setCardCVV("999");
-        formPage.pushСontinueButton();
+        mainPage.buyForYourMoney();
+        formPage.setFormFiled(generatedDeclinedCard("en"));
         formPage.checkMessageError();
     }
 
-    @SneakyThrows
     @Test
     @DisplayName("PaymentByUnknownCard")
-    void shouldNoPayByUnknownCard() {
-        MainPage.buyForYourMoney();
-        formPage.setCardNumber("4444444444444443");
-        formPage.setCardMonth("08");
-        formPage.setCardYear("23");
-        formPage.setCardOwner("Ivan Popov");
-        formPage.setCardCVV("999");
-        formPage.pushСontinueButton();
+    void shouldNoPayByNoDbCard() {
+        mainPage.buyForYourMoney();
+        formPage.setFormFiled(generatedNoDbCard());
         formPage.checkMessageError();
     }
 
-    @SneakyThrows
     @Test
     @DisplayName("PaymentByCardWithInvalidCardNumber")
     void shouldNoPayInvalidCardNumberField() {
-        MainPage.buyForYourMoney();
-        formPage.setCardNumber("3333 2323 DSDF ASSD");
-        formPage.setCardMonth("08");
-        formPage.setCardYear("23");
-        formPage.setCardOwner("Ivan Popov");
-        formPage.setCardCVV("999");
-        formPage.pushСontinueButton();
+        mainPage.buyForYourMoney();
+        formPage.setFormFiled(new DataGenerator("3333 2323 DSDF ASSD", "12", "23", "LOMAKIN MIKHAIL", "899"));
         formPage.checkMessageWrongFormat();
     }
 
-    @SneakyThrows
+
     @Test
     @DisplayName("PaymentByCardWithInvalidMonthNumber")
     void shouldNoPayInvalidMonthField() {
-        MainPage.buyForYourMoney();
-        formPage.setCardNumber("4444444444444441");
-        formPage.setCardMonth("13");
-        formPage.setCardYear("23");
-        formPage.setCardOwner("Ivan Popov");
-        formPage.setCardCVV("999");
-        formPage.pushСontinueButton();
+        mainPage.buyForYourMoney();
+        formPage.setFormFiled(new DataGenerator("4444 4444 4444 4441", "13", "24", "SIDOROV PETR", "745"));
         formPage.checkMessageWrongDate();
     }
 
-    @SneakyThrows
     @Test
     @DisplayName("PaymentByCardWithInvalidYearNumber")
-    void shouldNoPayInvalidYearField() {
-        MainPage.buyForYourMoney();
-        formPage.setCardNumber("4444444444444441");
-        formPage.setCardMonth("08");
-        formPage.setCardYear("18");
-        formPage.setCardOwner("Ivan Popov");
-        formPage.setCardCVV("999");
-        formPage.pushСontinueButton();
+    void shouldValidateYearField() {
+        mainPage.buyForYourMoney();
+        formPage.setFormFiled(new DataGenerator("4444 4444 4444 4441", "10", "19", "BOGOMAZOVA MARIIA", "982"));
         formPage.checkMessageOverDate();
     }
 
-    @SneakyThrows
     @Test
     @DisplayName("PaymentByCardWithInvalidOwnerField")
     void shouldNoPayInvalidCardOwnerField() {
-        MainPage.buyForYourMoney();
-        formPage.setCardNumber("4444444444444441");
-        formPage.setCardMonth("08");
-        formPage.setCardYear("23");
-        formPage.setCardOwner("Bdfy 1213 Попов 12");
-        formPage.setCardCVV("999");
-        formPage.pushСontinueButton();
+        mainPage.buyForYourMoney();
+        formPage.setFormFiled(new DataGenerator("4444 4444 4444 4441", "03", "25", "Bdfy 1213 Попов 12", "654"));
         formPage.checkMessageError();
     }
 
-    @SneakyThrows
+
     @Test
     @DisplayName("PaymentByCardWithInvalidCVVField")
     void shouldNoPayInvalidCVVField() {
-        MainPage.buyForYourMoney();
-        formPage.setCardNumber("4444444444444441");
-        formPage.setCardMonth("08");
-        formPage.setCardYear("23");
-        formPage.setCardOwner("Ivan Popov");
-        formPage.setCardCVV("12D");
-        formPage.pushСontinueButton();
+        mainPage.buyForYourMoney();
+        formPage.setFormFiled(new DataGenerator("4444 4444 4444 4441", "07", "27", "OLEG POPOV", "12D"));
         formPage.checkMessageError();
     }
 
-    @SneakyThrows
+
     @Test
     @DisplayName("PaymentByCardWithAnEmptyCardNumber")
     void shouldNoPayEmptyCardNumberField() {
-        MainPage.buyForYourMoney();
-        formPage.setCardNumber("");
-        formPage.setCardMonth("08");
-        formPage.setCardYear("23");
-        formPage.setCardOwner("Ivan Popov");
-        formPage.setCardCVV("999");
-        formPage.pushСontinueButton();
+        mainPage.buyForYourMoney();
+        formPage.setFormFiled(new DataGenerator("", "09", "23", "ELIZAVETA MOROZOVA", "140"));
         formPage.checkMessageWrongFormat();
     }
 
-    @SneakyThrows
+
     @Test
     @DisplayName("PaymentByCardWithAnEmptyMonthNumber")
     void shouldNoPayEmptyMonthField() {
-        MainPage.buyForYourMoney();
-        formPage.setCardNumber("4444444444444441");
-        formPage.setCardMonth("");
-        formPage.setCardYear("23");
-        formPage.setCardOwner("Ivan Popov");
-        formPage.setCardCVV("999");
-        formPage.pushСontinueButton();
+        mainPage.buyForYourMoney();
+        formPage.setFormFiled(new DataGenerator("4444 4444 4444 4441", "", "25", "MAMAEVA ZINA", "875"));
         formPage.checkMessageWrongFormat();
     }
 
-    @SneakyThrows
+
     @Test
     @DisplayName("PaymentByCardWithAnEmptyYearNumber")
     void shouldNoPayEmptyYearField() {
-        MainPage.buyForYourMoney();
-        formPage.setCardNumber("4444444444444441");
-        formPage.setCardMonth("08");
-        formPage.setCardYear("");
-        formPage.setCardOwner("Ivan Popov");
-        formPage.setCardCVV("999");
-        formPage.pushСontinueButton();
+        mainPage.buyForYourMoney();
+        formPage.setFormFiled(new DataGenerator("4444 4444 4444 4441", "08", "", "OLGA MATVEEVA", "149"));
         formPage.checkMessageWrongFormat();
     }
 
-    @SneakyThrows
+
     @Test
     @DisplayName("PaymentByCardWithAnEmptyFieldOwner")
     void shouldNoPayEmptyCardOwnerField() {
-        MainPage.buyForYourMoney();
-        formPage.setCardNumber("4444444444444441");
-        formPage.setCardMonth("08");
-        formPage.setCardYear("23");
-        formPage.setCardOwner("");
-        formPage.setCardCVV("999");
-        formPage.pushСontinueButton();
+        mainPage.buyForYourMoney();
+        formPage.setFormFiled(new DataGenerator("4444 4444 4444 4441", "04", "23", "", "564"));
         formPage.checkMessageRequiredField();
     }
 
-    @SneakyThrows
+
     @Test
     @DisplayName("PaymentByCardWithAnEmptyCVVField")
     void shouldNoPayEmptyCVVField() {
-        MainPage.buyForYourMoney();
-        formPage.setCardNumber("4444444444444441");
-        formPage.setCardMonth("08");
-        formPage.setCardYear("23");
-        formPage.setCardOwner("Ivan Popov");
-        formPage.setCardCVV("");
-        formPage.pushСontinueButton();
+        mainPage.buyForYourMoney();
+        formPage.setFormFiled(new DataGenerator("4444 4444 4444 4441", "11", "26", "PETROV BORIS", ""));
+        ;
         formPage.checkMessageWrongFormat();
     }
 
-    @SneakyThrows
     @Test
     @DisplayName("PaymentByActiveCardDatabaseRecordCheck")
     void shouldPayByApprovedCardStatusInDB() {
-        MainPage.buyForYourMoney();
-        formPage.setCardNumber("4444444444444441");
-        formPage.setCardMonth("08");
-        formPage.setCardYear("23");
-        formPage.setCardOwner("Ivan Popov");
-        formPage.setCardCVV("999");
-        formPage.pushСontinueButton();
+        mainPage.buyForYourMoney();
+        formPage.setFormFiled(generatedApprovedCard("en"));
         formPage.checkMessageSuccess();
-        SqlHelper.checkPaymentStatus(Status.PASSED);
+        SqlHelper.getcheckPaymentStatus();
+        var expectedStatus = "PASSED";
+        var actualStatus = getcheckPaymentStatus();
+        assertEquals(expectedStatus, actualStatus);
     }
 
-    @SneakyThrows
+
     @Test
     @DisplayName("PaymentOnAnInactiveCardDatabaseRecordCheck")
     void shouldNoPayByDeclinedCardStatusInDB() {
-        MainPage.buyForYourMoney();
-        formPage.setCardNumber("4444444444444442");
-        formPage.setCardMonth("08");
-        formPage.setCardYear("23");
-        formPage.setCardOwner("Ivan Popov");
-        formPage.setCardCVV("999");
-        formPage.pushСontinueButton();
+        mainPage.buyForYourMoney();
+        formPage.setFormFiled(generatedApprovedCard("en"));
         formPage.checkMessageSuccess();
-        SqlHelper.checkPaymentStatus(Status.FAILED);
+        SqlHelper.getcheckPaymentStatus();
+        var expectedStatus = "FAILED";
+        var actualStatus = getcheckPaymentStatus();
+        assertEquals(expectedStatus, actualStatus);
     }
 }
-

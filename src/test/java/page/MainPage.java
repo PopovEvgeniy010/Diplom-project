@@ -9,6 +9,7 @@ public class MainPage {
     private static String appURL = System.getProperty("app.url");
     private static String appPORT = System.getProperty("app.port");
 
+
     public static void buyForYourMoney() {
         open(appURL + ":" + appPORT);
         $$(".button__content").find(exactText("Купить")).click();

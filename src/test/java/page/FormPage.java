@@ -2,13 +2,14 @@ package page;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import data.DataGenerator;
 
 import java.time.Duration;
 import java.util.List;
 
 import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.*;
 
 public class FormPage {
     List<SelenideElement> input = $$(".input__control");
@@ -19,12 +20,11 @@ public class FormPage {
     SelenideElement cvcOrCvvNumber = input.get(4);
 
     public void checkMessageSuccess() {
-        $$(".notification__title").find(exactText("Успешно")).should(Condition.appear, Duration.ofSeconds(120));
+        $$(".notification__title").find(exactText("Успешно")).should(Condition.appear, Duration.ofSeconds(15));
     }
 
     public void checkMessageError() {
-        $$(".notification__title").find(exactText("Ошибка")).should(Condition.appear, Duration.ofSeconds(120));
-        ;
+        $$(".notification__title").find(exactText("Ошибка")).should(Condition.appear, Duration.ofSeconds(15));
     }
 
     public void checkMessageWrongFormat() {
@@ -48,25 +48,13 @@ public class FormPage {
         $$(".button__content").find(exactText("Продолжить")).click();
     }
 
-    public void setCardNumber(String cNumber) {
-        cardNumber.setValue(cNumber);
+
+    public void setFormFiled(DataGenerator dataGenerator) {
+        cardNumber.setValue(dataGenerator.getNumber());
+        month.setValue(dataGenerator.getMonth());
+        year.setValue(dataGenerator.getYear());
+        cardOwner.setValue(dataGenerator.getHolder());
+        cvcOrCvvNumber.setValue(dataGenerator.getCvc());
+        pushСontinueButton();
     }
-
-    public void setCardMonth(String cMonth) {
-        month.setValue(cMonth);
-    }
-
-    public void setCardYear(String cYear) {
-        year.setValue(cYear);
-    }
-
-    public void setCardOwner(String cOwner) {
-        cardOwner.setValue(cOwner);
-    }
-
-    public void setCardCVV(String cCvv) {
-        cvcOrCvvNumber.setValue(cCvv);
-    }
-
-
 }

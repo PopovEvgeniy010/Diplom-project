@@ -3,9 +3,12 @@ package data;
 import io.qameta.allure.model.Status;
 import lombok.SneakyThrows;
 import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
+
 import java.sql.DriverManager;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class SqlHelper {
     private static String url = System.getProperty("db.url");
@@ -22,20 +25,19 @@ public class SqlHelper {
     }
 
     @SneakyThrows
-    public static  SqlHelper checkPaymentStatus(Status expectedStatus) {
+    public static String getcheckPaymentStatus() {
         var runner = new QueryRunner();
         var conn = DriverManager.getConnection(url, userDB, password);
-        var paymentDataSQL = "SELECT status FROM credit_request_entity WHERE bank_id = (SELECT credit_id FROM order_entity ORDER BY created DESC limit 1);";
-        return runner.query(conn, paymentDataSQL, new BeanHandler<>(SqlHelper.class));
+        var payment = "SELECT amount, status FROM payment_entity WHERE transaction_id = (SELECT payment_id FROM order_entity ORDER BY created DESC limit 1);";
+        return runner.query(conn, payment, new ScalarHandler<>());
     }
 
+
     @SneakyThrows
-    public static String  checkCreditStatus(Status expectedStatus) {
+    public static String getCheckCreditStatus() {
         var runner = new QueryRunner();
         var conn = DriverManager.getConnection(url, userDB, password);
         var creditDataSQL = "SELECT status FROM credit_request_entity WHERE bank_id = (SELECT credit_id FROM order_entity ORDER BY created DESC limit 1);";
-        return runner.query(conn, creditDataSQL,new ScalarHandler<>());
-
+        return runner.query(conn, creditDataSQL, new ScalarHandler<>());
     }
-
 }
