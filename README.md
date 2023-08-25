@@ -21,11 +21,13 @@ ___
 
   для запуска приложения с базой данных MysSQL выполнить команду:
  
- - `java -jar artifacts/aqa-shop.jar -P:jdbc.url=jdbc:msyl://localhost:3306/app`
+ - `java -D:spring.datasource.url=jdbc:mysql://localhost:3306/app -jar artifacts/aqa-shop.jar
+`
 
   для запуска приложения с базой данных Postgres выполнить команду:
 
-  - `java -jar artifacts/aqa-shop.jar -P:jdbc.url=jdbc:postgresql://localhost:5432/app`
+  - `java -D:spring.datasource.url=jdbc:postgresql://localhost:3306/app -jar artifacts/aqa-shop.jar
+`
 
 5. Запустить тесты:
 
