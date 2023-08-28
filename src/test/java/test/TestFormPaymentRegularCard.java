@@ -12,20 +12,15 @@ import page.MainPage;
 import static data.DataGenerator.*;
 import static data.SqlHelper.getcheckPaymentStatus;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-;
 
-public class
-TestFormPaymentRegularCard {
+
+public class TestFormPaymentRegularCard {
     private FormPage formPage;
     private MainPage mainPage;
 
     @BeforeEach
     void setUpFormPage() {
         formPage = new FormPage();
-    }
-
-    @BeforeEach
-    void setUpMainPage() {
         mainPage = new MainPage();
     }
 
@@ -155,7 +150,6 @@ TestFormPaymentRegularCard {
     void shouldNoPayEmptyCVVField() {
         mainPage.buyForYourMoney();
         formPage.setFormFiled(new DataGenerator("4444 4444 4444 4441", "11", "26", "PETROV BORIS", ""));
-        ;
         formPage.checkMessageWrongFormat();
     }
 
@@ -165,8 +159,7 @@ TestFormPaymentRegularCard {
         mainPage.buyForYourMoney();
         formPage.setFormFiled(generatedApprovedCard("en"));
         formPage.checkMessageSuccess();
-        SqlHelper.getcheckPaymentStatus();
-        var expectedStatus = "PASSED";
+        var expectedStatus = "APPROVED";
         var actualStatus = getcheckPaymentStatus();
         assertEquals(expectedStatus, actualStatus);
     }
@@ -176,10 +169,9 @@ TestFormPaymentRegularCard {
     @DisplayName("PaymentOnAnInactiveCardDatabaseRecordCheck")
     void shouldNoPayByDeclinedCardStatusInDB() {
         mainPage.buyForYourMoney();
-        formPage.setFormFiled(generatedApprovedCard("en"));
+        formPage.setFormFiled(generatedDeclinedCard("en"));
         formPage.checkMessageSuccess();
-        SqlHelper.getcheckPaymentStatus();
-        var expectedStatus = "FAILED";
+        var expectedStatus = "DECLINED";
         var actualStatus = getcheckPaymentStatus();
         assertEquals(expectedStatus, actualStatus);
     }

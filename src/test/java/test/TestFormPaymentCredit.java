@@ -4,12 +4,13 @@ import com.codeborne.selenide.logevents.SelenideLogger;
 import data.DataGenerator;
 import io.qameta.allure.selenide.AllureSelenide;
 import data.SqlHelper;
+import lombok.SneakyThrows;
 import page.FormPage;
 import org.junit.jupiter.api.*;
 import page.MainPage;
 
 import static data.DataGenerator.*;
-import static data.SqlHelper.getcheckPaymentStatus;
+import static data.SqlHelper.getCheckCreditStatus;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -18,12 +19,8 @@ public class TestFormPaymentCredit {
     private MainPage mainPage;
 
     @BeforeEach
-    void setUpFormPage() {
+    void setUpPage() {
         formPage = new FormPage();
-    }
-
-    @BeforeEach
-    void setUpMainPage() {
         mainPage = new MainPage();
     }
 
@@ -32,7 +29,7 @@ public class TestFormPaymentCredit {
         SelenideLogger.addListener("allure", new AllureSelenide());
     }
 
-    //@SneakyThrows
+    @SneakyThrows
     @AfterEach
     void clearAll() {
         SqlHelper.clearAllData();
@@ -166,9 +163,8 @@ public class TestFormPaymentCredit {
         mainPage.buyOnCredit();
         formPage.setFormFiled(generatedApprovedCard("en"));
         formPage.checkMessageSuccess();
-        SqlHelper.getCheckCreditStatus();
-        var expectedStatus = "PASSED";
-        var actualStatus = getcheckPaymentStatus();
+        var expectedStatus = "APPROVED";
+        var actualStatus = getCheckCreditStatus();
         assertEquals(expectedStatus, actualStatus);
     }
 
@@ -177,11 +173,10 @@ public class TestFormPaymentCredit {
     @DisplayName("PaymentOnAnInactiveCardDatabaseRecordCheck")
     void shouldPayByDeclinedCardInCreditStatusInDB() {
         mainPage.buyOnCredit();
-        formPage.setFormFiled(generatedApprovedCard("en"));
+        formPage.setFormFiled(generatedDeclinedCard("en"));
         formPage.checkMessageSuccess();
-        SqlHelper.getCheckCreditStatus();
-        var expectedStatus = "FAILED";
-        var actualStatus = getcheckPaymentStatus();
+        var expectedStatus = "DECLINED";
+        var actualStatus = getCheckCreditStatus();
         assertEquals(expectedStatus, actualStatus);
     }
 }

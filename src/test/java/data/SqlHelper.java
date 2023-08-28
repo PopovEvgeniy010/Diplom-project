@@ -1,13 +1,10 @@
 package data;
 
-import io.qameta.allure.model.Status;
 import lombok.SneakyThrows;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.sql.DriverManager;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class SqlHelper {
@@ -28,7 +25,7 @@ public class SqlHelper {
     public static String getcheckPaymentStatus() {
         var runner = new QueryRunner();
         var conn = DriverManager.getConnection(url, userDB, password);
-        var payment = "SELECT amount, status FROM payment_entity WHERE transaction_id = (SELECT payment_id FROM order_entity ORDER BY created DESC limit 1);";
+        var payment = "SELECT status FROM payment_entity WHERE transaction_id = (SELECT payment_id FROM order_entity ORDER BY created DESC limit 1);";
         return runner.query(conn, payment, new ScalarHandler<>());
     }
 
