@@ -82,7 +82,7 @@ public class TestFormPaymentCredit {
     void shouldNoPayInvalidMonthFieldInCredit() {
         mainPage.buyOnCredit();
         formPage.setFormFiled(new DataGenerator("4444 4444 4444 4441", "13", "25", "PETROV BORIS", "762"));
-        formPage.checkMessageOverDate();
+        formPage.checkMessageWrongDate();
     }
 
 
@@ -109,7 +109,7 @@ public class TestFormPaymentCredit {
     void shouldNoPayInvalidCVVFieldInCredit() {
         mainPage.buyForYourMoney();
         formPage.setFormFiled(new DataGenerator("4444 4444 4444 4441", "06", "24", "MAMAEVA ZINA", "35K"));
-        formPage.checkMessageError();
+        formPage.checkMessageWrongFormat();
     }
 
 

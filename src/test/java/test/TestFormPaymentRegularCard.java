@@ -105,7 +105,7 @@ public class TestFormPaymentRegularCard {
     void shouldNoPayInvalidCVVField() {
         mainPage.buyForYourMoney();
         formPage.setFormFiled(new DataGenerator("4444 4444 4444 4441", "07", "27", "OLEG POPOV", "12D"));
-        formPage.checkMessageError();
+        formPage.checkMessageWrongFormat();
     }
 
 
